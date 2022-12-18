@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>dog_club_site</RootNamespace>
+    <RootNamespace>dog_club</RootNamespace>
+    <Authors>Белякова</Authors>
   </PropertyGroup>
 
 </Project>
