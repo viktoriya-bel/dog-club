@@ -6,4 +6,10 @@
     <Authors>Белякова</Authors>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\moks\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Views\" />
+  </ItemGroup>
+
 </Project>
