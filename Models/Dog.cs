@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,6 +8,7 @@ namespace dog_club.Models
 {
     public class Dog
     {
+        [Key]
         public int id { get; } // первичный ключ
         public string name { set; get; }
         public int ownerId { set; get; }
