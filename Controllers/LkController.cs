@@ -9,7 +9,7 @@ namespace dog_club.Controllers
 {
     public class LkController : Controller
     {
-        //[Authorize]
+        [Authorize]
         public ViewResult Profile()
         {
             return View();//User.Identity.Name

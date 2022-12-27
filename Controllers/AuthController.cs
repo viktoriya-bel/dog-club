@@ -23,18 +23,19 @@ namespace dog_club.Controllers
         {
             return View();
         }
+
+        //[ValidateAntiForgeryToken]
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginModel model)
+        public async Task<IActionResult> Login(User model)
         {
             if (ModelState.IsValid)
             {
-                User user = await db.Users.FirstOrDefaultAsync(user => user.userName == model.UserName && user.password == model.Password);
+                User user = await db.Users.FirstOrDefaultAsync(user => user.userName == model.userName && user.password == model.password);
                 if (user != null)
                 {
-                    await Authenticate(model.UserName); // аутентификация
+                    await Authenticate(model.userName); // аутентификация
 
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Profile", "Lk");
                 }
                 ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }

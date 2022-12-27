@@ -30,7 +30,7 @@ namespace dog_club_site
             services.AddRazorPages();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => //CookieAuthenticationOptions
                 {
-                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Lk/Login");
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Auth/Login");
                 });
         }
 
@@ -66,7 +66,20 @@ namespace dog_club_site
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                });
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "profile",
+                    defaults: new { controller = "Lk", action = "Profile" });
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "owners",
+                    defaults: new { controller = "Owners", action = "Index" });
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "logout",
+                    defaults: new { controller = "Auth", action = "Logout" });
+
+            });
         }
     }
 }
