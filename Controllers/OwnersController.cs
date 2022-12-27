@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using dog_club.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace dog_club.Controllers
 {
@@ -18,19 +19,14 @@ namespace dog_club.Controllers
         }
 
         // GET: OwnersController
-        //[Authorize]
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.Owners.OrderBy(owner => owner.id));
         }
 
-        // GET: OwnersController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         // GET: OwnersController/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -38,6 +34,7 @@ namespace dog_club.Controllers
 
         // POST: OwnersController/Create[ValidateAntiForgeryToken]
         [HttpPost]
+        [Authorize]
         public ActionResult Create(Owner model)
         {
             try
@@ -57,6 +54,7 @@ namespace dog_club.Controllers
         }
 
         // GET: OwnersController/Edit/5
+        [Authorize]
         public ActionResult Edit(int id)
         {
             Owner ownerData = db.Owners.Where(owner => owner.id == id).FirstOrDefault();
@@ -65,6 +63,7 @@ namespace dog_club.Controllers
 
         // POST: OwnersController/Edit/5
         [HttpPost]
+        [Authorize]
         public ActionResult Edit(Owner model)
         {
             try
@@ -87,6 +86,7 @@ namespace dog_club.Controllers
         }
 
         // GET: OwnersController/Delete/5
+        [Authorize]
         public ActionResult Delete(int id)
         {
             Owner ownerData = db.Owners.Where(owner => owner.id == id).FirstOrDefault();
@@ -95,6 +95,7 @@ namespace dog_club.Controllers
 
         // POST: OwnersController/Delete/5
         [HttpPost]
+        [Authorize]
         public ActionResult Delete(Owner model)
         {
             try

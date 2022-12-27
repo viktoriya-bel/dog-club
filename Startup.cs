@@ -3,9 +3,11 @@ using dog_club.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -26,6 +28,7 @@ namespace dog_club_site
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<dog_club.testdbContext>();
             services.AddRazorPages();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => //CookieAuthenticationOptions
@@ -78,6 +81,10 @@ namespace dog_club_site
                     name: "default",
                     pattern: "logout",
                     defaults: new { controller = "Auth", action = "Logout" });
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "roles",
+                    defaults: new { controller = "Roles", action = "Index" });
 
             });
         }

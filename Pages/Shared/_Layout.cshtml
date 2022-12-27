@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -32,12 +34,22 @@
                     </ul>
 
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="/profile">Войти</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="/logout">Выйти</a>
-                        </li>
+                        @if (HttpContextAccessor.HttpContext.Request.Cookies.ContainsKey(".AspNetCore.Cookies"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/profile">Личный кабинет</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/logout">Выйти</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/profile">Войти</a>
+                            </li>
+                        }
+
                     </ul>
                 </div>
             </div>

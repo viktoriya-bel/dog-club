@@ -11,7 +11,7 @@ namespace dog_club.Data.Mocks
         public IEnumerable<Role> get()
         {
             return new List<Role>{
-                new Role { name = "user", isAdmin = false, unavailableModules = new List<string>{ "users" } },
+                new Role { name = "operator", isAdmin = false, },
                 new Role { name = "admin", isAdmin = true },
             };
         }
