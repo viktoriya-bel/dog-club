@@ -9,10 +9,10 @@ namespace dog_club.Models
     public class Owner
     {
         [Key]
-        public int id { get; } // первичный ключ
+        public int id { get; set; } // первичный ключ
         public string fullName { set; get; }
         public string address { set; get; }
         public string phone { set; get; }
-        public List<Dog> Dogs { set; get; } 
+        //public List<Dog> Dogs { set; get; } 
     }
 }

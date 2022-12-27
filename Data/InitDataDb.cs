@@ -21,6 +21,11 @@ namespace dog_club.Data
                 context.Users.AddRange(new UsersMock().get());
                 context.SaveChanges();
             }
+            if (!context.Owners.Any())
+            {
+                context.Owners.AddRange(new OwnersMock().get());
+                context.SaveChanges();
+            }
         }
     }
 }

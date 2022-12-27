@@ -1,0 +1,44 @@
+﻿@using dog_club.Models
+@model Owner
+
+@{
+    Layout = "_Layout";
+    @Html.Partial("_menuProfile")
+}
+<h2>Вы точно хотите удалить?</h2>
+<h2>После удаления данного владельца нельзя будет восстановить</h2>
+<form method="post">
+
+    <div class="mb-3">
+        <label asp-for="id" class="form-label">ID</label>
+        <input type="number" name="id" asp-for="id" class="form-control" value="@Model.id" disabled>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="fullName" class="form-label">ФИО</label>
+        <input type="text" name="fullName" asp-for="fullName" class="form-control" value="@Model.fullName" disabled>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="address" class="form-label">Адрес</label>
+        <input type="text" name="address" asp-for="address" class="form-control" value="@Model.address" disabled>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="phone" class="form-label">Телефон</label>
+        <input type="text" name="phone" asp-for="phone" class="form-control" value="@Model.phone" disabled>
+    </div>
+    <div>
+        <div class="row justify-content-md-center">
+            <div class="col col-lg-2">
+                <button type="submit" class="btn btn-danger">Удалить</button>
+            </div>
+            <div class="col col-lg-2">
+                <a href="/owners" class="btn btn-primary stretched-link">Вернуться назад</a>
+            </div>
+        </div>
+    </div>
+
+    
+    
+</form>
