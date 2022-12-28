@@ -31,6 +31,21 @@ namespace dog_club.Data
                 context.Groups.AddRange(new GroupsMock().get());
                 context.SaveChanges();
             }
+            if (!context.Breeds.Any())
+            {
+                context.Breeds.AddRange(new BreedsMock().get());
+                context.SaveChanges();
+            }
+            /*if (!context.Dogs.Any())
+            {
+                context.Dogs.AddRange(new DogsMock().get());
+                context.SaveChanges();
+            }*/
+            if (!context.Rewards.Any())
+            {
+                context.Rewards.AddRange(new RewardsMock().get());
+                context.SaveChanges();
+            }
         }
     }
 }

@@ -1,0 +1,37 @@
+﻿@using dog_club.Models
+@model Reward
+
+@{
+    Layout = "_Layout";
+    @Html.Partial("_menuProfile")
+}
+<h2>Вы точно хотите удалить?</h2>
+<h2>После удаления данные нельзя будет восстановить</h2>
+<form method="post">
+
+    <div class="mb-3">
+        <label asp-for="id" class="form-label">ID</label>
+        <input type="number" name="id" asp-for="id" class="form-control" value="@Model.id" disabled>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="name" class="form-label">Наименование</label>
+        <input type="text" name="name" asp-for="name" class="form-control" value="@Model.name" disabled>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="date" class="form-label">Дата получения</label>
+        <input type="date" name="date" asp-for="date" class="form-control" value="@Model.date" disabled>
+    </div>
+
+    <div>
+        <div class="row justify-content-md-center">
+            <div class="col col-lg-2">
+                <button type="submit" class="btn btn-danger">Удалить</button>
+            </div>
+            <div class="col col-lg-2">
+                <a href="/rewards" class="btn btn-primary stretched-link">Вернуться назад</a>
+            </div>
+        </div>
+    </div>
+</form>

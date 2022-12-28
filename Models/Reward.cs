@@ -6,16 +6,11 @@ using System.Threading.Tasks;
 
 namespace dog_club.Models
 {
-    public class Group
+    public class Reward
     {
         [Key]
         public int id { get; set; } // первичный ключ
-        public string nameGroup { set; get; }
-
-        public ICollection<Breed> Breeds { set; get; }
-        public Group()
-        {
-            Breeds = new List<Breed>();
-        }
+        public string name { set; get; }
+        public DateTime date { set; get; }
     }
 }

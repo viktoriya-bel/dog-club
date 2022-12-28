@@ -1,0 +1,41 @@
+﻿@using dog_club.Models
+@model Breed
+
+@{
+    Layout = "_Layout";
+    @Html.Partial("_menuProfile")
+}
+<h2>Вы точно хотите удалить?</h2>
+<h2>После удаления данноую пароду нельзя будет восстановить</h2>
+<form method="post">
+
+    <div class="mb-3">
+        <label asp-for="id" class="form-label">ID</label>
+        <input type="number" name="id" asp-for="id" class="form-control" value="@Model.id" disabled>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="nameBreed" class="form-label">Наименование</label>
+        <input type="text" name="nameBreed" asp-for="nameBreed" class="form-control" value="@Model.nameBreed" disabled>
+    </div>
+
+    <div class="mb-3">
+        <select class="form-select" name="GroupId" disabled>
+            <option value="@Model.Group.id" selected>@Model.Group.nameGroup</option>
+        </select>
+    </div>
+
+    <div>
+        <div class="row justify-content-md-center">
+            <div class="col col-lg-2">
+                <button type="submit" class="btn btn-danger">Удалить</button>
+            </div>
+            <div class="col col-lg-2">
+                <a href="/breeds" class="btn btn-primary stretched-link">Вернуться назад</a>
+            </div>
+        </div>
+    </div>
+
+
+
+</form>

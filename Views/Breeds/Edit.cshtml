@@ -1,0 +1,41 @@
+﻿@using dog_club.Models
+@model BreedEdit
+
+@{
+    Layout = "_Layout";
+    @Html.Partial("_menuProfile")
+}
+<h2>Редактирование</h2>
+<form method="post">
+
+    <div class="mb-3">
+        <label asp-for="id" class="form-label">ID</label>
+        <input type="number" name="id" asp-for="id" class="form-control" value="@Model.id" disabled>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="nameBreed" class="form-label">Наименование</label>
+        <input type="text" name="nameBreed" asp-for="nameBreed" class="form-control" value="@Model.nameBreed" required>
+    </div>
+
+    <div class="mb-3">
+        <select class="form-select" name="GroupId">
+            @{
+                foreach (Group group in Model.Groups)
+                {
+                    if (group.id == Model.GroupId)
+                    {
+                        <option value="@group.id" selected>@group.nameGroup</option>
+                    }
+                    else
+                    {
+                        <option value="@group.id">@group.nameGroup</option>
+                    }
+
+                }
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Изменить</button>
+</form>

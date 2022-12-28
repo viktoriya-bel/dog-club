@@ -1,0 +1,41 @@
+﻿@using dog_club.Models
+@model IEnumerable<Reward>
+
+@{
+    Layout = "_Layout";
+    @Html.Partial("_menuProfile")
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Наименование</th>
+            <th scope="col">Дата получения</th>
+            <th scope="col"></th>
+            <th scope="col"><button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Create", "Rewards")'"><i class="fas fa-plus-circle" title="Добавить запись"></i></button></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var reward in Model)
+            {
+                <tr>
+                    <th scope="row">@reward.id</th>
+                    <td>@reward.name</td>
+                    <td>@reward.date</td>
+                    <td>
+                        <button type="button" class="btn btn-light" onclick="location.href='@Url.Action("Edit", "Rewards", new { id = reward.id })'">
+                            <i class="fas fa-pencil-alt text-primary" title="Редактировать запись"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-light" onclick="location.href='@Url.Action("Delete", "Rewards", new { id = reward.id })'">
+                            <i class="fas fa-trash-alt text-danger" title="Удалить запись"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
