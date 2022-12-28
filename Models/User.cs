@@ -9,11 +9,11 @@ namespace dog_club.Models
     public class User
     {
         [Key]
-        public int id { get; private set; } // первичный ключ
+        public int id { get; set; } // первичный ключ
         public string userName { set; get; }
         public string password { set; get; }
-        public int roleId { set; get; } // внешний ключ к таблице "Роли"
+        public int? RoleId { set; get; } // внешний ключ к таблице "Роли"
 
-        //public virtual Role Role { set; get; }
+        public Role Role { set; get; }
     }
 }

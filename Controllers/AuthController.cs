@@ -44,7 +44,7 @@ namespace dog_club.Controllers
 
         private async Task Authenticate(User user)
         {
-            Role role = db.Roles.Where(role => role.id == user.roleId).FirstOrDefault();
+            Role role = db.Roles.Where(role => role.id == user.RoleId).FirstOrDefault();
             // создаем один claim
             var claims = new List<Claim>
             {

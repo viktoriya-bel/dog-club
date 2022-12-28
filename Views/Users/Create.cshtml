@@ -1,0 +1,37 @@
+﻿@using dog_club.Models
+@model IEnumerable<Role>
+
+@{
+    Layout = "_Layout";
+    @Html.Partial("_menuProfile")
+}
+<h2>Добавление нового пользователя</h2>
+<form method="post">
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+
+    <div class="mb-3">
+        <label asp-for="userName" class="form-label">Логин</label>
+        <input type="text" name="userName" asp-for="userName" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="password" class="form-label">Пароль</label>
+        <input type="text" name="password" asp-for="password" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <select class="form-select" aria-label="Выберите роль" name="RoleId">
+            @{
+                foreach (Role role in Model)
+                {
+                    <option value="@role.id">@role.name</option>
+                }
+            }
+        </select>
+    </div>
+    
+    <div>
+        <button type="submit" class="btn btn-primary">Добавить</button>
+    </div>
+
+</form>

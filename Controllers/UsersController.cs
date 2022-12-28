@@ -1,8 +1,8 @@
 ﻿using dog_club.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,39 +10,40 @@ using System.Threading.Tasks;
 
 namespace dog_club.Controllers
 {
-    public class RolesController : Controller
+    public class UsersController : Controller
     {
         private testdbContext db;
 
-        public RolesController(testdbContext context)
+        public UsersController(testdbContext context)
         {
             db = context;
         }
 
-        // GET: RolesController
+        // GET: UsersController
         [Authorize(Roles = "admin")]
         public ActionResult Index()
         {
-            return View(db.Roles.OrderBy(role => role.id));
+            var users = db.Users.Include(user => user.Role).OrderBy(role => role.id);
+            return View(users);
         }
 
-        // GET: RolesController/Create
+        // GET: UsersController/Create
         [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
-            return View();
+            return View(db.Roles);
         }
 
-        // POST: RolesController/Create
-        [HttpPost]
+        // POST: UsersController/Create
         [Authorize(Roles = "admin")]
-        public ActionResult Create(Role model)
+        [HttpPost]
+        public ActionResult Create(User model)
         {
             try
             {
                 if (model != null)
                 {
-                    db.Roles.AddRange(new Role{ name = model.name, isAdmin = false  });
+                    db.Users.AddRange(new User { userName = model.userName, password = model.password, RoleId = model.RoleId });
                     db.SaveChanges();
                     return RedirectToAction(nameof(Index));
                 }
@@ -54,26 +55,28 @@ namespace dog_club.Controllers
             }
         }
 
-        // GET: RolesController/Edit/5
+        // GET: UsersController/Edit/5
         [Authorize(Roles = "admin")]
         public ActionResult Edit(int id)
         {
-            Role roleData = db.Roles.Where(role => role.id == id).FirstOrDefault();
-            return View(roleData);
+            User user = db.Users.Where(user => user.id == id).FirstOrDefault();
+            var userWithRoles = new UserEdit() { id = user.id, userName = user.userName, password = user.password, RoleId = user.RoleId, availableRoles = db.Roles.ToList() };
+            return View(userWithRoles);
         }
 
-        // POST: RolesController/Edit/5
+        // POST: UsersController/Edit/5
         [HttpPost]
         [Authorize(Roles = "admin")]
-        public ActionResult Edit(Role model)
+        public ActionResult Edit(User model)
         {
             try
             {
-                var role = db.Roles.Where(role => role.id == model.id).FirstOrDefault();
-                if (role != null)
+                var user = db.Users.Where(user => user.id == model.id).FirstOrDefault();
+                if (user != null)
                 {
-                    role.name = model.name;
-                    role.isAdmin = model.isAdmin;
+                    user.userName = model.userName;
+                    user.password = model.password;
+                    user.RoleId = model.RoleId;
                     db.SaveChanges();
                     return RedirectToAction(nameof(Index));
                 }
@@ -85,25 +88,25 @@ namespace dog_club.Controllers
             }
         }
 
-        // GET: RolesController/Delete/5
+        // GET: UsersController/Delete/5
         [Authorize(Roles = "admin")]
         public ActionResult Delete(int id)
         {
-            Role roleData = db.Roles.Where(role => role.id == id).FirstOrDefault();
-            return View(roleData);
+            var user = db.Users.Include(user => user.Role).Where(role => role.id == id).FirstOrDefault();
+            return View(user);
         }
 
-        // POST: RolesController/Delete/5
+        // POST: UsersController/Delete/5
         [HttpPost]
         [Authorize(Roles = "admin")]
-        public ActionResult Delete(Role model)
+        public ActionResult Delete(User model)
         {
             try
             {
-                var role = db.Roles.Where(role => role.id == model.id).FirstOrDefault();
-                if (role != null)
+                var user = db.Users.Where(user => user.id == model.id).FirstOrDefault();
+                if (user != null)
                 {
-                    db.Roles.Remove(role);
+                    db.Users.Remove(user);
                     db.SaveChanges();
                     return RedirectToAction(nameof(Index));
                 }

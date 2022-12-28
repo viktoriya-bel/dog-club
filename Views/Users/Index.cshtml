@@ -1,0 +1,43 @@
+﻿@using dog_club.Models
+@model IEnumerable<User>
+
+@{
+    Layout = "_Layout";
+    @Html.Partial("_menuProfile")
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Логин</th>
+            <th scope="col">Пароль</th>
+            <th scope="col">Роль</th>
+            <th scope="col"></th>
+            <th scope="col"><button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Create", "Users")'"><i class="fas fa-plus-circle" title="Добавить запись"></i></button></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var User in Model)
+            {
+                <tr>
+                    <th scope="row">@User.id</th>
+                    <td>@User.userName</td>
+                    <td>@User.password</td>
+                    <td>@User.Role.name</td>
+                    <td>
+                        <button type="button" class="btn btn-light" onclick="location.href='@Url.Action("Edit", "Users", new { id = User.id })'">
+                            <i class="fas fa-pencil-alt text-primary" title="Редактировать запись"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-light" onclick="location.href='@Url.Action("Delete", "Users", new { id = User.id })'">
+                            <i class="fas fa-trash-alt text-danger" title="Удалить запись"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

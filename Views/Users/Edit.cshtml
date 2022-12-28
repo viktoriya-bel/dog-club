@@ -1,0 +1,46 @@
+﻿@using dog_club.Models
+@model UserEdit
+
+@{
+    Layout = "_Layout";
+    @Html.Partial("_menuProfile")
+}
+<h2>Редактирование</h2>
+<form method="post">
+
+    <div class="mb-3">
+        <label asp-for="id" class="form-label">ID</label>
+        <input type="number" name="id" asp-for="id" class="form-control" value="@Model.id" disabled>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="userName" class="form-label">Логин</label>
+        <input type="text" name="userName" asp-for="userName" class="form-control" value="@Model.userName" required>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="password" class="form-label">Пароль</label>
+        <input type="text" name="password" asp-for="password" class="form-control" value="@Model.password" required>
+    </div>
+
+    <div class="mb-3">
+        <select class="form-select" aria-label="Выберите роль" name="RoleId">
+            @{
+                foreach (Role role in Model.availableRoles)
+                {
+                    if (role.id == Model.RoleId)
+                    {
+                        <option value="@role.id" selected>@role.name</option>
+                    }
+                    else
+                    {
+                        <option value="@role.id">@role.name</option>
+                    }
+
+                }
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Изменить</button>
+</form>

@@ -15,6 +15,10 @@ namespace dog_club.Models
         public Boolean isAdmin { set; get; }
         public List<string> unavailableModules { set; get; } // необходимо выпилить
 
-        //public List<User> Users { set; get; } // нужен ли список юзеров данной роли???
+        public ICollection<User> Users { set; get; } // список юзеров данной роли
+        public Role()
+        {
+            Users = new List<User>();
+        }
     }
 }
