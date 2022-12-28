@@ -85,6 +85,14 @@ namespace dog_club_site
                     name: "default",
                     pattern: "roles",
                     defaults: new { controller = "Roles", action = "Index" });
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "users",
+                    defaults: new { controller = "Users", action = "Index" });
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "groups",
+                    defaults: new { controller = "Groups", action = "Index" });
 
             });
         }

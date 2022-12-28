@@ -9,9 +9,9 @@ namespace dog_club.Models
     public class Group
     {
         [Key]
-        public int id { get; } // первичный ключ
-        public int nameGroup { set; get; }
+        public int id { get; set; } // первичный ключ
+        public string nameGroup { set; get; }
 
-        public List<Breed> Breeds { set; get; }
+        //public List<Breed> Breeds { set; get; }
     }
 }

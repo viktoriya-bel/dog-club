@@ -13,7 +13,7 @@ namespace dog_club
     {
         //public DbSet<Breed> Breeds { get; set; }
         //public DbSet<Dog> Dogs { get; set; }
-        //public DbSet<Group> Groups { get; set; }
+        public DbSet<Group> Groups { get; set; }
         public DbSet<Owner> Owners { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }

@@ -1,0 +1,17 @@
+﻿@model dog_club.Models.Group
+
+@{
+    Layout = "_Layout";
+    @Html.Partial("_menuProfile")
+}
+<h2>Добавление новой группы</h2>
+<form method="post">
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+
+    <div class="mb-3">
+        <label asp-for="nameGroup" class="form-label">Наименование</label>
+        <input type="text" name="nameGroup" asp-for="nameGroup" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Добавить</button>
+</form>
