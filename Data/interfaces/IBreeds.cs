@@ -10,6 +10,6 @@ namespace dog_club.Data.interfaces
     {
         IEnumerable<Breed> Breeds { get; set; }
 
-        Breed GetBreed(int breedId);
+        //Breed GetBreed(int ВreedId);
     }
 }

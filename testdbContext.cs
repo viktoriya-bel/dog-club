@@ -12,7 +12,7 @@ namespace dog_club
     public partial class testdbContext : DbContext
     {
         public DbSet<Breed> Breeds { get; set; }
-        //public DbSet<Dog> Dogs { get; set; }
+        public DbSet<Dog> Dogs { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Owner> Owners { get; set; }
         public DbSet<Reward> Rewards { get; set; }
@@ -40,6 +40,8 @@ namespace dog_club
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Dog>().HasOne(e => e.Mother).WithMany();
+            modelBuilder.Entity<Dog>().HasOne(e => e.Father).WithMany();
             OnModelCreatingPartial(modelBuilder);
         }
 
