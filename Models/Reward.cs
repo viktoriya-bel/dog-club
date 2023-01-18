@@ -13,5 +13,7 @@ namespace dog_club.Models
         public string name { set; get; }
         public int? DogId { set; get; } //внешний ключ
         public DateTime date { set; get; }
+
+        public Dog Dog { set; get; }
     }
 }

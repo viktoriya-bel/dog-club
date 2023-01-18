@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,14 +22,15 @@ namespace dog_club.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            return View(db.Rewards.OrderBy(reward => reward.id));
+            var rewards = db.Rewards.Include(reward => reward.Dog).OrderBy(reward => reward.id);
+            return View(rewards);
         }
 
         // GET: RewardsController/Create
         [Authorize]
         public ActionResult Create()
         {
-            return View();
+            return View(db.Dogs);
         }
 
         // POST: RewardsController/Create
@@ -40,7 +42,7 @@ namespace dog_club.Controllers
             {
                 if (model != null)
                 {
-                    db.Rewards.AddRange(new Reward { name = model.name, date = model.date });
+                    db.Rewards.AddRange(new Reward { name = model.name, date = model.date, DogId = model.DogId });
                     db.SaveChanges();
                     return RedirectToAction(nameof(Index));
                 }
@@ -57,7 +59,8 @@ namespace dog_club.Controllers
         public ActionResult Edit(int id)
         {
             Reward rewardData = db.Rewards.Where(reward => reward.id == id).FirstOrDefault();
-            return View(rewardData);
+            var rewardWithDogs = new RewardEdit() { date = rewardData.date, DogId = rewardData.DogId, Dogs = db.Dogs.ToList(), id = rewardData.id, name = rewardData.name };
+            return View(rewardWithDogs);
         }
 
         // POST: RewardsController/Edit/5
@@ -72,6 +75,7 @@ namespace dog_club.Controllers
                 {
                     reward.name = model.name;
                     reward.date = model.date;
+                    reward.DogId = model.DogId;
                     db.SaveChanges();
                     return RedirectToAction(nameof(Index));
                 }
@@ -87,7 +91,7 @@ namespace dog_club.Controllers
         [Authorize]
         public ActionResult Delete(int id)
         {
-            Reward rewardData = db.Rewards.Where(reward => reward.id == id).FirstOrDefault();
+            Reward rewardData = db.Rewards.Include(reward => reward.Dog).Where(reward => reward.id == id).FirstOrDefault();
             return View(rewardData);
         }
 

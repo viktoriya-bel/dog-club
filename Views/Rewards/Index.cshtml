@@ -12,6 +12,7 @@
             <th scope="col">ID</th>
             <th scope="col">Наименование</th>
             <th scope="col">Дата получения</th>
+            <th scope="col">Собака (ID)</th>
             <th scope="col"></th>
             <th scope="col"><button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Create", "Rewards")'"><i class="fas fa-plus-circle" title="Добавить запись"></i></button></th>
         </tr>
@@ -24,6 +25,7 @@
                     <th scope="row">@reward.id</th>
                     <td>@reward.name</td>
                     <td>@reward.date</td>
+                    <td>@reward.Dog.name (@reward.DogId)</td>
                     <td>
                         <button type="button" class="btn btn-light" onclick="location.href='@Url.Action("Edit", "Rewards", new { id = reward.id })'">
                             <i class="fas fa-pencil-alt text-primary" title="Редактировать запись"></i>

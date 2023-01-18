@@ -1,5 +1,5 @@
 ﻿@using dog_club.Models
-@model Reward
+@model RewardEdit
 
 @{
     Layout = "_Layout";
@@ -21,6 +21,25 @@
     <div class="mb-3">
         <label asp-for="date" class="form-label">Дата получения</label>
         <input type="date" name="date" asp-for="date" class="form-control" value="@Model.date" required>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DogId" class="form-label">Собака</label>
+        <select class="form-select" name="DogId" required>
+            @{
+                foreach (Dog dog in Model.Dogs)
+                {
+                    if (dog.id == Model.DogId)
+                    {
+                        <option value="@dog.id" selected>@dog.name (@dog.id)</option>
+                    }
+                    else
+                    {
+                        <option value="@dog.id">@dog.name (@dog.id)</option>
+                    }
+                }
+            }
+        </select>
     </div>
 
     <button type="submit" class="btn btn-primary">Изменить</button>
