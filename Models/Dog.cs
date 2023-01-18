@@ -23,5 +23,11 @@ namespace dog_club.Models
         public virtual Breed Breed { set; get; }
         public virtual Dog Mother { set; get; }
         public virtual Dog Father { set; get; }
+
+        public ICollection<Reward> Rewards { set; get; }
+        public Dog()
+        {
+            Rewards = new List<Reward>();
+        }
     }
 }

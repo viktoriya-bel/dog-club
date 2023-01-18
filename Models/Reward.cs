@@ -11,6 +11,7 @@ namespace dog_club.Models
         [Key]
         public int id { get; set; } // первичный ключ
         public string name { set; get; }
+        public int? DogId { set; get; } //внешний ключ
         public DateTime date { set; get; }
     }
 }

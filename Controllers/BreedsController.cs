@@ -59,7 +59,7 @@ namespace dog_club.Controllers
         public ActionResult Edit(int id)
         {
             Breed breed = db.Breeds.Where(user => user.id == id).FirstOrDefault();
-            var breedWithGroups = new BreedEdit() { nameBreed = breed.nameBreed, GroupId = breed.GroupId, Groups = db.Groups.ToList() };
+            var breedWithGroups = new BreedEdit() { nameBreed = breed.nameBreed, GroupId = breed.GroupId, Groups = db.Groups.ToList(), id = breed.id };
             return View(breedWithGroups);
         }
 

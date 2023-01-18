@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using dog_club.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,10 +22,10 @@ namespace dog_club.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            var dogs = db.Dogs.Include(dog => dog.Owner).OrderBy(dog => dog.id);
+            var dogs = db.Dogs.Include(dog => dog.Owner).OrderBy(dog => dog.id)
+                .Include(dog => dog.Breed).OrderBy(dog => dog.id)
+                .Include(dog => dog.Mother).OrderBy(dog => dog.id);
             return View(dogs);
-
-            //return View();
         }
 
         // GET: DogsController/Details/5
@@ -38,17 +39,33 @@ namespace dog_club.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            return View();
+            SelectDataDog data = new SelectDataDog { Owners = db.Owners.ToList(), Breeds = db.Breeds.ToList(), Dogs = db.Dogs.ToList() };
+            return View(data);
         }
 
         // POST: DogsController/Create
         [HttpPost]
         [Authorize]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Dog model)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (model != null)
+                {
+                    db.Dogs.AddRange(new Dog { 
+                        BreedId = model.BreedId, 
+                        dateBirth = model.dateBirth, 
+                        dateDeath = model.dateDeath, 
+                        FatherId = model.FatherId, 
+                        MotherId = model.MotherId, 
+                        gender = model.gender, 
+                        name = model.name, 
+                        OwnerId = model.OwnerId 
+                    });
+                    db.SaveChanges();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View();
             }
             catch
             {
@@ -60,17 +77,42 @@ namespace dog_club.Controllers
         [Authorize]
         public ActionResult Edit(int id)
         {
-            return View();
+            Dog dogCurrent = db.Dogs.Where(dog => dog.id == id).FirstOrDefault();
+            SelectDataDog data = new SelectDataDog { 
+                Owners = db.Owners.ToList(), 
+                Breeds = db.Breeds.ToList(), 
+                Dogs = db.Dogs.ToList(), 
+                id = dogCurrent.id,
+                name = dogCurrent.name, 
+                gender = dogCurrent.gender, 
+                dateBirth = dogCurrent.dateBirth, 
+                dateDeath = dogCurrent.dateDeath 
+            };
+            return View(data);
         }
 
         // POST: DogsController/Edit/5
         [HttpPost]
         [Authorize]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Dog model)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                Dog dogCurrent = db.Dogs.Where(dog => dog.id == model.id).FirstOrDefault();
+                if (dogCurrent != null)
+                {
+                    dogCurrent.name = model.name;
+                    dogCurrent.gender = model.gender;
+                    dogCurrent.BreedId = model.BreedId;
+                    dogCurrent.OwnerId = model.OwnerId;
+                    dogCurrent.MotherId = model.MotherId;
+                    dogCurrent.FatherId = model.FatherId;
+                    dogCurrent.dateBirth = model.dateBirth;
+                    dogCurrent.dateDeath = model.dateDeath;
+                    db.SaveChanges();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View();
             }
             catch
             {
@@ -82,17 +124,27 @@ namespace dog_club.Controllers
         [Authorize]
         public ActionResult Delete(int id)
         {
-            return View();
+            var dogs = db.Dogs.Include(dog => dog.Owner).OrderBy(dog => dog.id)
+                .Include(dog => dog.Breed).OrderBy(dog => dog.id)
+                .Include(dog => dog.Mother).OrderBy(dog => dog.id).Where(dog => dog.id == id).FirstOrDefault();
+            return View(dogs);
         }
 
         // POST: DogsController/Delete/5
         [HttpPost]
         [Authorize]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Dog model)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                Dog dogCurrent = db.Dogs.Where(dog => dog.id == model.id).FirstOrDefault();
+                if (dogCurrent != null)
+                {
+                    db.Dogs.Remove(dogCurrent);
+                    db.SaveChanges();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View();
             }
             catch
             {

@@ -1,0 +1,141 @@
+﻿@using dog_club.Models
+@model SelectDataDog
+
+@{
+    Layout = "_Layout";
+    @Html.Partial("_menuProfile")
+}
+<h2>Редактирование </h2>
+<form method="post">
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+    <div class="mb-3">
+        <label asp-for="id" class="form-label">ID</label>
+        <input type="number" name="id" asp-for="id" class="form-control" value="@Model.id" disabled>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="name" class="form-label">Кличка</label>
+        <input type="text" name="name" asp-for="name" class="form-control"  value="@Model.name" required>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="gender" class="form-label">Пол</label>
+        <select class="form-select" name="gender" required>
+            @if ("женский" == Model.gender.ToString())
+            {
+                <option value="женский" selected>женский</option>
+            }
+            else
+            {
+                <option value="мужской" selected>мужской</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="BreedId" class="form-label">Порода</label>
+        <select class="form-select" name="BreedId" required>
+            @{
+                foreach (Breed breed in Model.Breeds)
+                {
+                    if (breed.id == Model.BreedId)
+                    {
+                        <option value="@breed.id" selected>@breed.nameBreed</option>
+                    }
+                    else
+                    {
+                        <option value="@breed.id">@breed.nameBreed</option>
+                    }
+                }
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="OwnerId" class="form-label">Владелец</label>
+        <select class="form-select" name="OwnerId" required>
+            @{
+                foreach (Owner owner in Model.Owners)
+                {
+                    if (owner.id == Model.OwnerId)
+                    {
+                        <option value="@owner.id" selected>@owner.fullName</option>
+                    }
+                    else
+                    {
+                        <option value="@owner.id">@owner.fullName</option>
+                    }
+                }
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="MotherId" class="form-label">Мать</label>
+        <select class="form-select" name="MotherId">
+            @if (Model.MotherId == null)
+            {
+                <option value="" selected>Не выбрано</option>
+            }
+            else
+            {
+                <option value="">Не выбрано</option>
+            }
+            @{
+                foreach (Dog dog in Model.Dogs)
+                {
+                    if (Model.MotherId != null && dog.id == Model.MotherId)
+                    {
+                        <option value="@dog.id" selected>@dog.name (@dog.id)</option>
+                    }
+                    else
+                    {
+                        <option value="@dog.id">@dog.name (@dog.id)</option>
+                    }
+                }
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="FatherId" class="form-label">Отец</label>
+        <select class="form-select" name="FatherId">
+            @if (Model.FatherId == null)
+            {
+                <option value="" selected>Не выбрано</option>
+            }
+            else
+            {
+                <option value="">Не выбрано</option>
+            }
+            @{
+                foreach (Dog dog in Model.Dogs)
+                {
+                    if (Model.FatherId != null && dog.id == Model.FatherId)
+                    {
+                        <option value="@dog.id" selected>@dog.name (@dog.id)</option>
+                    }
+                    else
+                    {
+                        <option value="@dog.id">@dog.name (@dog.id)</option>
+                    }
+                }
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="dateBirth" class="form-label">Дата рождения</label>
+        <input type="date" name="dateBirth" asp-for="dateBirth" class="form-control"  value="@Model.dateBirth" required>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="dateDeath" class="form-label">Дата смерти</label>
+        <input type="date" name="dateDeath" asp-for="dateDeath" class="form-control"  value="@Model.dateDeath">
+    </div>
+
+    <div>
+        <button type="submit" class="btn btn-primary">Изменить</button>
+    </div>
+
+</form>
